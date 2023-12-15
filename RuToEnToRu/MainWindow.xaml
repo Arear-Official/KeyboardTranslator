@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
-        Title="Translator" Height="200" Width="180" Loaded="Window_Loaded" Background="Transparent">
+        Title="Translator" Height="200" Width="180" Loaded="Window_Loaded" Background="Transparent" Closing="Window_Closing">
     <Window.Resources>
 
         <Color x:Key="grayColor">#FF300850</Color>
@@ -211,9 +211,9 @@
                     </Button.Triggers>
                 </Button>
                 <TextBlock Text="Автозагрузка" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" Foreground="#FFFCF4FF"></TextBlock>
-                <ToggleButton Height="20" Width="40" Template="{DynamicResource toggleButtonStyle}" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" IsChecked="{Binding Path=Autorun}" Click="ToggleButton_Click"></ToggleButton>
+                <ToggleButton x:Name="autoruntoggle" Height="20" Width="40" Template="{DynamicResource toggleButtonStyle}" Margin="0,60,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="ToggleButton_Click"></ToggleButton>
                 <TextBlock Text="Автономность" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,80,0,0" Foreground="#FFFCF4FF"></TextBlock>
-                <ToggleButton Height="20" Width="40" Template="{DynamicResource toggleButtonStyle}" Margin="0,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" IsChecked="{Binding Path=Autooff}" Click="ToggleButton_Click"></ToggleButton>
+                <ToggleButton  x:Name="autoofftoggle" Height="20" Width="40" Template="{DynamicResource toggleButtonStyle}" Margin="0,100,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Click="ToggleButton_Click1"></ToggleButton>
             </Grid>
         </Grid>
     </Border>

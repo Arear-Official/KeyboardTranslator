@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System;
+using RuToEnToRu.Properties;
 
 namespace RuToEnToRu
 {
@@ -17,26 +18,28 @@ namespace RuToEnToRu
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        const string _Name = "Keyboard rewriter";
+        const string _Name = "Rewriter";
+
+        private Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
+        private Settings settings;
 
         private bool autorun;
 
-        public bool Autorun { get { return autorun; } set { autorun = value; OnPropertyChanged(nameof(autorun)); ConfigurationManager.AppSettings.Set("Autorun", autorun.ToString()); } }
+        public bool Autorun { get { return autorun; } set { autorun = value; settings.Autorun = autorun; settings.Save(); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private string txt;
         public string Txt { get { return txt; } set { txt = value; OnPropertyChanged(nameof(Txt)); } }
 
         private bool autooff;
-        public bool Autooff { get { return autooff; } set { autooff = value; OnPropertyChanged(nameof(autooff)); ConfigurationManager.AppSettings.Set("Autooff", autooff.ToString()); } }
+        public bool Autooff { get { return autooff; } set { autooff = value; settings.Autooff = autooff; settings.Save(); } }
 
         private Notify _trey;
 
         public MainWindow()
         {
             Txt = "";
-            Autorun = bool.Parse(ConfigurationManager.AppSettings.Get("Autorun"));
-            Autooff = bool.Parse(ConfigurationManager.AppSettings.Get("Autooff"));
             InitializeComponent();
             this.DataContext = this;
             _trey = new Notify();
@@ -48,7 +51,11 @@ namespace RuToEnToRu
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            settings = Properties.Settings.Default;
+            autoruntoggle.IsChecked = settings.Autorun;
+            Autorun = settings.Autorun;
+            autoofftoggle.IsChecked = settings.Autooff;
+            Autooff = settings.Autooff;
             var hotKeyHost = new HotKeyHost((HwndSource)PresentationSource.FromVisual(this));
             hotKeyHost.AddHotKey(new CustomHotKey(Key.C, ModifierKeys.Alt, TranslateKey));
         }
@@ -76,12 +83,17 @@ namespace RuToEnToRu
             SetAutorun();
         }
 
+        private void ToggleButton_Click1(object sender, RoutedEventArgs e)
+        {
+            Autooff = !Autooff;
+        }
+
         private void SetAutorun()
         {
             string ExePath = Assembly.GetExecutingAssembly().Location;
 
-            RegistryKey registry = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\");
-
+            RegistryKey registry = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\",true);
+            Autorun = !Autorun;
             try
             {
                 if (Autorun)
@@ -90,12 +102,15 @@ namespace RuToEnToRu
                 }
                 else
                 {
-                    registry.DeleteValue(ExePath);
+                    registry.DeleteValue(_Name, false);
                 }
                 registry.Flush();
                 registry.Close();
             }
-            catch { }
+            catch 
+            {
+                System.Windows.MessageBox.Show("wrong");
+            }
         }
 
 
@@ -134,6 +149,12 @@ namespace RuToEnToRu
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            
+        }
+
     }
 }
     

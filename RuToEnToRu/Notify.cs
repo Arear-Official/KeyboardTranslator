@@ -70,6 +70,11 @@ namespace RuToEnToRu
         public void SetVisible(bool Visible) 
         {
             _notifyIcon.Visible=Visible;
-        }       
+        }  
+        
+        public void Destroy()
+        {
+            _notifyIcon.Dispose();
+        }
     }
 }
