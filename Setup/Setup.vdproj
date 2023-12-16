@@ -1502,6 +1502,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -1526,6 +1534,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -5333,7 +5349,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup"
         "ProductCode" = "8:{998AC420-07BF-4AFF-AB72-FBC2FA9A5F0B}"
-        "PackageCode" = "8:{E19DEFEB-147A-4457-BD8A-18DAC5BE734A}"
+        "PackageCode" = "8:{5498C361-FB8E-4617-918F-5761ED6E4540}"
         "UpgradeCode" = "8:{86AF0BBB-E759-4CEC-B4E7-537C6EE7DA19}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
@@ -5341,7 +5357,7 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Arear"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Setup"
@@ -5455,7 +5471,7 @@
         {
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_6E013C604A004BFABA73EC2D91DCE9FF"
             {
-            "Name" = "8:Translator Installer"
+            "Name" = "8:Translator"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"
@@ -5469,7 +5485,7 @@
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_BC6B40D8750B4AF2821D996FFF3EFBB9"
             {
-            "Name" = "8:Translator Installer"
+            "Name" = "8:Translator"
             "Arguments" = "8:"
             "Description" = "8:"
             "ShowCmd" = "3:1"

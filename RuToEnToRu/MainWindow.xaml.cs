@@ -10,6 +10,8 @@ using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System;
 using RuToEnToRu.Properties;
+using MessageBox = System.Windows.MessageBox;
+using System.Diagnostics;
 
 namespace RuToEnToRu
 {
@@ -18,7 +20,7 @@ namespace RuToEnToRu
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        const string _Name = "Rewriter";
+        const string _Name = "KTranslator";
 
         private Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
@@ -39,25 +41,27 @@ namespace RuToEnToRu
 
         public MainWindow()
         {
-            Txt = "";
+                Txt = "";
             InitializeComponent();
             this.DataContext = this;
-            _trey = new Notify();
-            if (autorun)
-            {
-                this.Hide();
-            }
+            
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            settings = Properties.Settings.Default;
-            autoruntoggle.IsChecked = settings.Autorun;
-            Autorun = settings.Autorun;
-            autoofftoggle.IsChecked = settings.Autooff;
-            Autooff = settings.Autooff;
-            var hotKeyHost = new HotKeyHost((HwndSource)PresentationSource.FromVisual(this));
-            hotKeyHost.AddHotKey(new CustomHotKey(Key.C, ModifierKeys.Alt, TranslateKey));
+                settings = Properties.Settings.Default;
+                autoruntoggle.IsChecked = settings.Autorun;
+                Autorun = settings.Autorun;
+                autoofftoggle.IsChecked = settings.Autooff;
+                Autooff = settings.Autooff;
+                var hotKeyHost = new HotKeyHost((HwndSource)PresentationSource.FromVisual(this));
+                hotKeyHost.AddHotKey(new CustomHotKey(Key.C, ModifierKeys.Alt, TranslateKey));
+                _trey = new Notify();
+                if (autorun)
+                {
+                    this.Hide();
+                    _trey.SetVisible(true);
+                }
         }
 
         private void TranslateKey(Key e, ModifierKeys d)
@@ -87,12 +91,12 @@ namespace RuToEnToRu
         {
             Autooff = !Autooff;
         }
-
+        //Autorun there
         private void SetAutorun()
         {
             string ExePath = Assembly.GetExecutingAssembly().Location;
 
-            RegistryKey registry = Registry.CurrentUser.CreateSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\",true);
+            RegistryKey registry = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run\\",true);
             Autorun = !Autorun;
             try
             {
@@ -102,7 +106,7 @@ namespace RuToEnToRu
                 }
                 else
                 {
-                    registry.DeleteValue(_Name, false);
+                    registry.DeleteValue(_Name);
                 }
                 registry.Flush();
                 registry.Close();

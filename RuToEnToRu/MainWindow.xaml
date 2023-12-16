@@ -191,7 +191,7 @@
                 </Rectangle>
                 <Rectangle>
                     <Rectangle.Fill>
-                        <ImageBrush ImageSource="/setting.png" Stretch="Uniform" Opacity="0.2"/>
+                        <ImageBrush ImageSource="/setting.png" Stretch="Uniform" Opacity="0.5"/>
                     </Rectangle.Fill>
                 </Rectangle>
                 <Button BorderThickness="0" Height="20" Width="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,15,10,0" Template="{StaticResource NoMouseOverButtonTemplate}">

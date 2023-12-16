@@ -249,6 +249,7 @@ namespace RuToEnToRu
                 int error = Marshal.GetLastWin32Error();
                 if (error != 0)
                     throw new Win32Exception(error);
+                
             }
         }
 
