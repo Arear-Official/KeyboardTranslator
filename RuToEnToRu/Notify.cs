@@ -1,17 +1,32 @@
 ﻿using System;
+using System.Configuration;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
+using static System.Net.Mime.MediaTypeNames;
 using Application = System.Windows.Application;
 using FontStyle = System.Drawing.FontStyle;
+using System.Windows.Media.Imaging;
+using System.Windows.Controls;
+using System.Windows.Media;
+using Color = System.Drawing.Color;
+using System.IO;
 
 namespace RuToEnToRu
 {
     internal class Notify
     {
+
         private NotifyIcon _notifyIcon;
 
         private Window _mainwindow;
+
+        private MainWindow _mw;
+
+
 
         public Notify() 
         { 
@@ -23,20 +38,28 @@ namespace RuToEnToRu
         {
             _mainwindow = mainwindow;
             CreateNotifeyIcon();
+            
+        }
+
+
+        public Notify(MainWindow mw)
+        {
+            _mw = mw;
+            _mainwindow = Application.Current.MainWindow;
+            CreateNotifeyIcon();
         }
 
         private void CreateNotifeyIcon()
         {
             _notifyIcon = new NotifyIcon();
-            _notifyIcon.Icon = new System.Drawing.Icon("RuEn.ico");
+            _notifyIcon.Icon = new UserIcon().GetIcon();
             _notifyIcon.Text = "Translator";
-            SetVisible(false);
-            
+
             ContextMenuStrip contextMenu = new ContextMenuStrip();
           
             contextMenu.Items.Add("Развернуть");
             contextMenu.Items.Add("Выключить");
-            contextMenu.Font = new Font(FontFamily.GenericMonospace,12,FontStyle.Bold);
+            contextMenu.Font = new Font(System.Drawing.FontFamily.GenericMonospace,12,FontStyle.Bold);
             contextMenu.Items[0].Click += OpenMenuItem_Click;
             contextMenu.Items[1].Click += ExitMenuItem_Click;
             foreach (ToolStripMenuItem item in contextMenu.Items)
@@ -48,7 +71,12 @@ namespace RuToEnToRu
             _notifyIcon.ContextMenuStrip = contextMenu;
 
             _notifyIcon.DoubleClick += NotifyIcon_DoubleClick;
+
+            SetVisible(false);
         }
+
+
+
 
         private void NotifyIcon_DoubleClick(object sender, EventArgs e)
         {
@@ -75,6 +103,6 @@ namespace RuToEnToRu
         public void Destroy()
         {
             _notifyIcon.Dispose();
-        }
+        }        
     }
 }

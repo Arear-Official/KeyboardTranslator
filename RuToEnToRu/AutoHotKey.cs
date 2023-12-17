@@ -235,6 +235,8 @@ namespace RuToEnToRu
 
                     if (error == 1409)
                         throw new HotKeyAlreadyRegisteredException(e.Message, hotKey, e);
+                    else 
+                        throw e;
                 }
             }
             else

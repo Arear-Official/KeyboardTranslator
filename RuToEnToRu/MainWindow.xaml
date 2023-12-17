@@ -10,7 +10,6 @@
         AllowsTransparency="True"
         Title="Translator" Height="200" Width="180" Loaded="Window_Loaded" Background="Transparent" Closing="Window_Closing">
     <Window.Resources>
-
         <Color x:Key="grayColor">#FF300850</Color>
         <Color x:Key="greenColor">#FF881098</Color>
 
@@ -111,7 +110,7 @@
             </LinearGradientBrush>
         </Border.BorderBrush>
         <Grid>
-            
+
             <StackPanel x:Name="pnlControlBar"
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal"

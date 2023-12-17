@@ -206,6 +206,7 @@
     <Compile Include="CustomHotkey.cs" />
     <Compile Include="Notify.cs" />
     <Compile Include="Translator.cs" />
+    <Compile Include="UserIcon.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

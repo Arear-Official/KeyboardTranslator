@@ -11,7 +11,9 @@ using System.Runtime.InteropServices;
 using System;
 using RuToEnToRu.Properties;
 using MessageBox = System.Windows.MessageBox;
+using FontStyle = System.Drawing.FontStyle;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace RuToEnToRu
 {
@@ -22,13 +24,11 @@ namespace RuToEnToRu
     {
         const string _Name = "KTranslator";
 
-        private Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-
-        private Settings settings;
+        Settings settings;
 
         private bool autorun;
 
-        public bool Autorun { get { return autorun; } set { autorun = value; settings.Autorun = autorun; settings.Save(); } }
+        public bool Autorun { get { return autorun; } set { autorun = value;  settings.Autorun = autorun; settings.Save(); } }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private string txt;
@@ -42,29 +42,31 @@ namespace RuToEnToRu
         public MainWindow()
         {
                 Txt = "";
+            
             InitializeComponent();
-            this.DataContext = this;
+            this.DataContext = this;            
             
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-                settings = Properties.Settings.Default;
-                autoruntoggle.IsChecked = settings.Autorun;
-                Autorun = settings.Autorun;
-                autoofftoggle.IsChecked = settings.Autooff;
-                Autooff = settings.Autooff;
-                var hotKeyHost = new HotKeyHost((HwndSource)PresentationSource.FromVisual(this));
-                hotKeyHost.AddHotKey(new CustomHotKey(Key.C, ModifierKeys.Alt, TranslateKey));
-                _trey = new Notify();
-                if (autorun)
-                {
-                    this.Hide();
-                    _trey.SetVisible(true);
-                }
+
+            settings = Properties.Settings.Default;
+            autoruntoggle.IsChecked = settings.Autorun;
+            Autorun = settings.Autorun;
+            autoofftoggle.IsChecked = settings.Autooff;
+            Autooff = settings.Autooff;
+            _trey = new Notify(this);
+            if (autorun)
+            {
+                this.Hide();
+                _trey.SetVisible(true);
+            }
+            var hotKeyHost = new HotKeyHost((HwndSource)PresentationSource.FromVisual(this));
+            hotKeyHost.AddHotKey(new CustomHotKey(Key.C, ModifierKeys.Alt, this.TranslateKey));
         }
 
-        private void TranslateKey(Key e, ModifierKeys d)
+        public void TranslateKey(Key e, ModifierKeys d)
         {
             if (!Autooff) this.Show();
             Txt = Translator.TranslateText(System.Windows.Clipboard.GetText());
@@ -91,7 +93,6 @@ namespace RuToEnToRu
         {
             Autooff = !Autooff;
         }
-        //Autorun there
         private void SetAutorun()
         {
             string ExePath = Assembly.GetExecutingAssembly().Location;
